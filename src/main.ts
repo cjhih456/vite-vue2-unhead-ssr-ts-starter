@@ -1,23 +1,22 @@
 import Vue from 'vue'
 import App from './App'
-import { createHead, createServerHead } from '@unhead/vue'
 import { Vueuse } from './utils/VueHelper'
 import type { VueContext } from 'types/VueContext'
 import createRouter from './router'
-const context: Partial<VueContext> = {}
+import HeadPlugin from '@/plugins/head'
+export const context = {} as VueContext
 function createApp() {
-  const router = createRouter(context as VueContext)
-  const createHeadFuc = import.meta.env.SSR ? createServerHead : createHead
-  const head = createHeadFuc()
+  const router = createRouter(context)
+  Vueuse(HeadPlugin, context)
   const app = new Vue({
     router,
+    provide: {
+      usehead: context.head
+    },
     render: h => h(App)
   })
   context.app = app
-  Vueuse(head)
-  return { ...(context as VueContext), head }
+  return context
 }
-
-export { context }
 
 export default createApp
