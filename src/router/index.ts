@@ -11,7 +11,10 @@ function createRouter(context: VueContext) {
   const router = routerContext.router = context.router = new Router({
     mode: 'history',
     base: '/',
-    routes: []
+    routes: [
+      { name: 'Main', path: '/', component: () => import('@/pages/index') },
+      { path: '*', redirect() { return { name: 'Main', replace: true } } }
+    ]
   })
   return router
 }

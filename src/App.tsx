@@ -1,7 +1,15 @@
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
+import { RouterView } from "vue-router";
+import { HeaderKey, provideHeader } from '@/plugins/header'
+import DefaultLayout from "./layout/DefaultLayout";
 
 export default defineComponent({
   setup() {
-    return () => <div>123</div>
+    provideHeader()
+    return () => <div>
+      <DefaultLayout>
+        <RouterView></RouterView>
+      </DefaultLayout>
+    </div>
   }
 })
