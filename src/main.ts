@@ -3,7 +3,7 @@ import App from './App'
 import { Vueuse } from './utils/VueHelper'
 import type { VueContext } from 'types/VueContext'
 import createRouter from './router'
-import HeadPlugin from '@/plugins/head'
+import HeadPlugin from '@/plugins/UnheadPlugin'
 export const context = {} as VueContext
 function createApp() {
   const router = createRouter(context)

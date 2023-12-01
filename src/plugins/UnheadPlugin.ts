@@ -9,7 +9,6 @@ export default {
     const headFunc = import.meta.env.SSR ? createServerHead : createHead
     const head = headFunc()
     Vue.prototype.unhead = options.head = head
-
   }
 }
 

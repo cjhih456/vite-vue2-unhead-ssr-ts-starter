@@ -1,4 +1,4 @@
-import { HeaderKey } from "@/plugins/header";
+import { HeaderKey } from "@/plugins/LayoutHeaderPlugin";
 import { computed, defineComponent, inject } from "vue";
 
 export default defineComponent({

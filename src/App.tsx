@@ -1,6 +1,6 @@
 import { defineComponent, inject } from "vue";
 import { RouterView } from "vue-router";
-import { HeaderKey, provideHeader } from '@/plugins/header'
+import { HeaderKey, provideHeader } from '@/plugins/LayoutHeaderPlugin'
 import DefaultLayout from "./layout/DefaultLayout";
 
 export default defineComponent({
