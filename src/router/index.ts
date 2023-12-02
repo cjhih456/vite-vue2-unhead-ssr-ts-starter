@@ -1,5 +1,5 @@
-import { Vueuse } from '@/utils/VueHelper';
-import type { VueContext } from 'types/VueContext';
+import { Vueuse } from '@/utils/VueHelper'
+import type { VueContext } from 'types/VueContext'
 import Router from 'vue-router'
 
 const routerContext: { router?: Router } = {
@@ -13,6 +13,7 @@ function createRouter(context: VueContext) {
     base: '/',
     routes: [
       { name: 'Main', path: '/', component: () => import('@/pages/index') },
+      { name: 'Login', path: '/login', component: () => import('@/pages/login') },
       { path: '*', redirect() { return { name: 'Main', replace: true } } }
     ]
   })
