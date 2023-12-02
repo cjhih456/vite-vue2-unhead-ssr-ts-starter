@@ -4,9 +4,11 @@ import { Vueuse } from './utils/VueHelper'
 import type { VueContext } from 'types/VueContext'
 import createRouter from './router'
 import HeadPlugin from '@/plugins/UnheadPlugin'
+import AsyncDataPlugin from './plugins/AsyncDataPlugin'
 export const context = {} as VueContext
 function createApp() {
   const router = createRouter(context)
+  Vueuse(AsyncDataPlugin, context)
   Vueuse(HeadPlugin, context)
   const app = new Vue({
     router,
