@@ -29,7 +29,7 @@ export default defineConfig((env) => {
       outDir: '../dist',
       rollupOptions: {
         output: {
-          manualChunks: {
+          manualChunks: env.ssrBuild ? undefined : {
             utils: ['lodash', 'vue', 'pinia', 'vue-router'],
           }
         }
