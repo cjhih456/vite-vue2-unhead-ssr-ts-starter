@@ -4,7 +4,6 @@ import { HeaderKey, provideHeader } from '@/plugins/LayoutHeaderPlugin'
 import DefaultLayout from "./layout/DefaultLayout";
 import { useHead } from "@unhead/vue";
 
-
 export default defineComponent({
   setup() {
     useHead({
@@ -15,7 +14,7 @@ export default defineComponent({
       ]
     })
     provideHeader()
-    return () => <div>
+    return () => <div id='app'>
       <DefaultLayout>
         <RouterView></RouterView>
       </DefaultLayout>

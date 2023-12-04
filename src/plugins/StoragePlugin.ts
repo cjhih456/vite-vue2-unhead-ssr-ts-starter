@@ -30,8 +30,10 @@ export default class Storage {
     },
     get(k) {
       if (import.meta.env.SSR) {
+        // // @ts-ignore
+        // const signedCookies = this._req.signedCookies || {} as any
         // @ts-ignore
-        const cookies = cookie?.req.signedCookies || {} as any
+        const cookies = this._req.cookies
         return _.toString(cookies[k]) as string
       } else {
         return _.toString(Vue.$cookies.get(k))
