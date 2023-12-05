@@ -6,6 +6,3 @@ const appContext = main()
 appContext.router.onReady(() => {
   appContext.app.$mount('#app', true)
 })
-
-// @ts-ignore
-window.appContext = appContext
