@@ -10,7 +10,9 @@
     "build:manifest:dev": "vite build --ssrManifest ssr-manifest.json --mode development --outDir ../dist",
     "build:manifest:prod": "vite build --ssrManifest ssr-manifest.json --mode production --outDir ../dist",
     "build:ssr:dev": "vite build --ssr ./entry-server.ts --mode development --outDir ../dist-server",
-    "build:ssr:prod": "vite build --ssr ./entry-server.ts --mode production --outDir ../dist-server"
+    "build:ssr:prod": "vite build --ssr ./entry-server.ts --mode production --outDir ../dist-server",
+    "build:dev": "yarn build:manifest:dev && yarn build:ssr:dev",
+    "build:prod": "yarn build:manifest:prod && yarn build:ssr:prod"
   },
   "dependencies": {
     "@unhead/ssr": "^1.8.7",
