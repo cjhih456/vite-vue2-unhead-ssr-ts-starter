@@ -6,3 +6,5 @@ yarn-error.log
 # build directory
 dist
 dist-server
+
+.env.*.local

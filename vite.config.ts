@@ -11,7 +11,17 @@ export default defineConfig((env) => {
   dotenv.config({
     override: true,
     processEnv,
+    path: '.env'
+  })
+  dotenv.config({
+    override: true,
+    processEnv,
     path: '.env.' + env.mode
+  })
+  !env.ssrBuild && dotenv.config({
+    override: true,
+    processEnv,
+    path: '.env.' + env.mode + '.local'
   })
   return {
     server: {
