@@ -3,8 +3,7 @@ import Cookies from 'vue-cookies'
 import { Vueuse } from './utils/VueHelper'
 Vueuse(Cookies)
 const appContext = main()
-const staticPath = location.href.replace(location.origin, '')
-appContext.router.push(staticPath).finally(() => {
+appContext.router.onReady(() => {
   appContext.app.$mount('#app', true)
 })
 
