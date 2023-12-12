@@ -9,13 +9,13 @@ export default {
     function loginWith(type: LoginType) {
       switch(type) {
         case LoginType.cookie: 
-        storage?.cookie.set('loggedin', 'Hello - Cookie!!')
+        storage?.cookie.set('userData', 'Hello - Cookie!!')
         break
         case LoginType.local: 
-        storage?.cookie.set('loggedin', 'Hello - Local!!')
+        storage?.local.set('userData', 'Hello - Local!!')
         break
         case LoginType.session: 
-        storage?.cookie.set('loggedin', 'Hello - Session!!')
+        storage?.session.set('userData', 'Hello - Session!!')
         break
       }
     }

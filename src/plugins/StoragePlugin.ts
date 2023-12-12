@@ -3,17 +3,23 @@ import _ from "lodash"
 import Vue, { type InjectionKey } from "vue"
 
 type CookieMergedOptions = CookieOptions & { sameSite?: string }
-type CookieStorage = {
+type CustomStorage = {
+  get(k: string): string
+  set(k: string, v: string): void
+  delete(k: string): void
+}
+type CookieStorage = CustomStorage & {
   _req?: Request
   _res?: Response
   defaultConfig?: CookieMergedOptions
-  get(k: string): string
   set(k: string, v: string, o?: CookieMergedOptions): void
   delete(k: string, o?: CookieMergedOptions): void
   setConfig(o?: CookieMergedOptions): void
 }
 type VueStorage = {
   cookie: CookieStorage
+  local: CustomStorage
+  session: CustomStorage
 }
 
 export default class Storage {
@@ -56,6 +62,34 @@ export default class Storage {
       }
     }
   } as CookieStorage
+  local = {
+    get(k: string) {
+      if (typeof window === 'undefined') return null
+      return localStorage.getItem(k)
+    },
+    set(k: string, v: string) {
+      if (typeof window === 'undefined') return
+      localStorage.setItem(k, v)
+    },
+    delete(k: string) {
+      if (typeof window === 'undefined') return
+      localStorage.removeItem(k)
+    }
+  } as CustomStorage
+  session = {
+    get(k: string) {
+      if (typeof window === 'undefined') return null
+      return sessionStorage.getItem(k)
+    },
+    set(k: string, v: string) {
+      if (typeof window === 'undefined') return
+      sessionStorage.setItem(k, v)
+    },
+    delete(k: string) {
+      if (typeof window === 'undefined') return
+      sessionStorage.removeItem(k)
+    }
+  } as CustomStorage
 }
 export const StorageSymbol = Symbol() as InjectionKey<Storage>
 
