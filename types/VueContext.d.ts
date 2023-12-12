@@ -1,4 +1,5 @@
 import type Storage from '@/plugins/StoragePlugin'
+import type { Pinia } from 'pinia'
 import type { VueConstructor } from 'vue'
 
 export interface VueContext {
@@ -6,5 +7,6 @@ export interface VueContext {
   app: import('vue').default
   head: import('@unhead/vue').VueHeadClient
   storage: Storage
+  pinia: Pinia
   // axios: import('axios').AxiosInstance
 }

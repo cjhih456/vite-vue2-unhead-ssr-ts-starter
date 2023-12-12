@@ -8,11 +8,14 @@ import AsyncDataPlugin from './plugins/AsyncDataPlugin'
 import type { Request, Response } from 'express'
 import Storage, { StorageSymbol } from './plugins/StoragePlugin'
 import dayjs from 'dayjs'
+import { createPinia, PiniaVuePlugin } from 'pinia'
 export const context = {} as VueContext
 function createApp(req?: Request, res?: Response) {
   const router = createRouter(context)
+  Vueuse(PiniaVuePlugin)
   Vueuse(AsyncDataPlugin, context)
   Vueuse(HeadPlugin, context)
+  context.pinia = createPinia()
   context.storage = new Storage(req && res ? { req, res } : undefined)
   context.storage.cookie.setConfig({
     path: '/',
@@ -22,6 +25,7 @@ function createApp(req?: Request, res?: Response) {
   })
   const app = new Vue({
     router,
+    pinia: context.pinia,
     provide: {
       [StorageSymbol as symbol]: context.storage,
       usehead: context.head
