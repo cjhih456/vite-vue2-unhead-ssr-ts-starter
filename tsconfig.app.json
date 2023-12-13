@@ -4,6 +4,9 @@
   "exclude": ["dist", "dist-server"],
   "compilerOptions": {
     "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
