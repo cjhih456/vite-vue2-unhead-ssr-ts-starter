@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["types/**/*.d.ts", "src/**/*"],
+  "include": ["types/**/*.d.ts", "src/**/*", "src/auto-imports.d.ts"],
   "exclude": ["dist", "dist-server"],
   "compilerOptions": {
     "allowJs": true,

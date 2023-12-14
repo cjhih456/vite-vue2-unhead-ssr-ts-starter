@@ -5,6 +5,7 @@ import vueJsx from '@vitejs/plugin-vue2-jsx'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import { checker } from 'vite-plugin-checker'
 import dotenv from 'dotenv'
+import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig((env) => {
   const processEnv = {} as ImportMetaEnv
@@ -45,9 +46,19 @@ export default defineConfig((env) => {
         }
       }
     },
+    ssr: {
+      noExternal: ['vuetify']
+    },
     plugins: [
       vue(),
       vueJsx(),
+      AutoImport({
+        dts: true,
+        include: [/\.vue$/, /\.vue\?vue/, /\.[jt]sx$/, /\.[jt]sx\?[jt]sx$/, /\.[jt]s$/],
+        defaultExportByFilename: true,
+        imports: [{ 'vue-router': ['RouterLink', 'RouterView'] }, 'vue', 'pinia'],
+        dirs: ['../node_modules/vuetify/lib/components/*/V[A-Z]*.js']
+      }),
       viteCommonjs(),
       legacy({
         targets: ['ie >= 11'],
@@ -74,10 +85,16 @@ export default defineConfig((env) => {
         sass: {
           sourceMap: true,
           additionalData: '@import "@/styles/variable"\n',
+          sassOptions: {
+            quietDeps: ['node_modules/vuetify/**/*.s(a|c)ss']
+          }
         },
         scss: {
           sourceMap: true,
           additionalData: '@import "@/styles/variable";\n',
+          sassOptions: {
+            quietDeps: ['node_modules/vuetify/**/*.s(a|c)ss']
+          }
         }
       }
     },

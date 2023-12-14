@@ -8,3 +8,4 @@ dist
 dist-server
 
 .env.*.local
+auto-imports.d.ts

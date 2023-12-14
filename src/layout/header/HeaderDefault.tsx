@@ -1,6 +1,4 @@
 import { StorageSymbol } from "@/plugins/StoragePlugin";
-import { computed, defineComponent, inject } from "vue";
-import { RouterLink } from "vue-router";
 
 export default defineComponent({
   name: 'HeaderDefault',
@@ -12,14 +10,14 @@ export default defineComponent({
     function logout() {
       storage?.cookie.delete('loggedin')
     }
-    return () => <div>
-      <RouterLink to={{name: 'Main'}}>Goto Main</RouterLink>
+    return () => <VNavigationDrawer app>
+      <RouterLink to={{ name: 'Main' }}>Goto Main</RouterLink>
       header!
       {
         userLoggedIn.value
           ? <button onClick={logout}>Logout</button>
-          : <RouterLink to={{name: 'Login'}}>Goto Login</RouterLink>
+          : <RouterLink to={{ name: 'Login' }}>Goto Login</RouterLink>
       }
-    </div>
+    </VNavigationDrawer>
   }
 })

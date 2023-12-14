@@ -1,6 +1,4 @@
 import HeaderDefault from '@/layout/header/HeaderDefault'
-import { provide, ref, type DefineComponent, type Ref } from 'vue'
-import type { InjectionKey } from 'vue'
 export const HeaderKey = Symbol() as InjectionKey<{
   headerName: Ref<string>,
   getHeaderComponent(): typeof HeaderDefault | undefined,

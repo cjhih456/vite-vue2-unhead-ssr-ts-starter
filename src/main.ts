@@ -9,9 +9,11 @@ import type { Request, Response } from 'express'
 import Storage, { StorageSymbol } from './plugins/StoragePlugin'
 import dayjs from 'dayjs'
 import { createPinia, PiniaVuePlugin } from 'pinia'
+import createVuetifyPlugin from './plugins/VuetifyPlugin'
 export const context = {} as VueContext
 function createApp(req?: Request, res?: Response) {
   const router = createRouter(context)
+  const vuetify = createVuetifyPlugin()
   Vueuse(PiniaVuePlugin)
   Vueuse(AsyncDataPlugin, context)
   Vueuse(HeadPlugin, context)
@@ -25,6 +27,7 @@ function createApp(req?: Request, res?: Response) {
   })
   const app = new Vue({
     router,
+    vuetify: vuetify,
     pinia: context.pinia,
     provide: {
       [StorageSymbol as symbol]: context.storage,

@@ -1,5 +1,5 @@
 import type { VueContext } from "types/VueContext";
-import { ref, type VueConstructor, type ComponentOptions } from "vue";
+import type { VueConstructor } from "vue";
 export default {
   install(Vue: VueConstructor, context: VueContext) {
     Vue.mixin({
