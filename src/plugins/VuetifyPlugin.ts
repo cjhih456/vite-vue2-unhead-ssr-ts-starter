@@ -1,7 +1,28 @@
 import { Vueuse } from '@/utils/VueHelper'
-import Vuetify from 'vuetify'
+// @ts-ignore
+import Vuetify from 'vuetify/lib'
 export default function createVuetifyPlugin() {
-  const vuetifyTheme = new Vuetify()
-  Vueuse(Vuetify)
+  Vueuse(Vuetify, {
+    components: {
+      VApp,
+      VAppBar,
+      VAppBarNavIcon,
+      VMain,
+      VContainer,
+      VBadge,
+      VBtn,
+      VForm,
+      VTextField,
+      VTextarea,
+      VIcon,
+      VSpacer,
+      VCard,
+      VRow,
+      VCol
+    }
+  })
+  const vuetifyTheme = new Vuetify({
+    theme: {}
+  }) as Vuetify
   return vuetifyTheme
 }

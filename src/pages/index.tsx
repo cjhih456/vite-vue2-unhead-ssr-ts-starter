@@ -1,9 +1,9 @@
-import { HeaderKey } from "@/plugins/LayoutHeaderPlugin";
+import { HeaderKey, type LayoutHeaderType } from "@/plugins/LayoutHeaderPlugin";
 
 export default defineComponent({
   name: 'MainPage',
   setup() {
-    const header = inject(HeaderKey)
+    const header = inject<LayoutHeaderType>(HeaderKey)
     function changeHeader() {
       if (!header) return
       header.changer(header.headerName.value === 'default' ? 'no-header' : 'default')

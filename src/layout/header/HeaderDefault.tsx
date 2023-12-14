@@ -1,23 +1,25 @@
-import { StorageSymbol } from "@/plugins/StoragePlugin";
+import Storage, { StorageSymbol } from "@/plugins/StoragePlugin";
 
 export default defineComponent({
   name: 'HeaderDefault',
   setup() {
-    const storage = inject(StorageSymbol)
+    const storage = inject<Storage>(StorageSymbol)
     const userLoggedIn = computed(() => {
-      return storage?.cookie.get('loggedin')
+      return storage?.cookie.get('userData')
     })
     function logout() {
-      storage?.cookie.delete('loggedin')
+      storage?.cookie.delete('userData')
     }
-    return () => <VNavigationDrawer app>
-      <RouterLink to={{ name: 'Main' }}>Goto Main</RouterLink>
-      header!
+    return () => <VAppBar app absolute elevate-on-scroll>
+      <VBtn to={{ name: 'Main' }} icon>
+        <VIcon>home</VIcon>
+      </VBtn>
+      <VSpacer />
       {
-        userLoggedIn.value
-          ? <button onClick={logout}>Logout</button>
-          : <RouterLink to={{ name: 'Login' }}>Goto Login</RouterLink>
+        !userLoggedIn.value
+          ? <VBtn to={{ name: 'Login' }} rounded large>Goto Login</VBtn>
+          : <VBtn onClick={logout}>Logout</VBtn>
       }
-    </VNavigationDrawer>
+    </VAppBar>
   }
 })

@@ -1,10 +1,11 @@
 import HeaderDefault from '@/layout/header/HeaderDefault'
-export const HeaderKey = Symbol() as InjectionKey<{
+export const HeaderKey = 'headerKey'
+export interface LayoutHeaderType {
   headerName: Ref<string>,
   getHeaderComponent(): typeof HeaderDefault | undefined,
   changer(): void
   changer(value: string): void
-}>
+}
 
 export function provideHeader() {
 
@@ -26,4 +27,4 @@ export function provideHeader() {
     }
   })
 }
-// app.use(head)
+

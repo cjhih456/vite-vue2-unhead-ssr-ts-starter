@@ -1,27 +1,41 @@
-import { LoginType } from "@/construct/LoginType"
-import { StorageSymbol } from "@/plugins/StoragePlugin"
+import Storage, { StorageSymbol } from "@/plugins/StoragePlugin"
+import ClientOnly from "@/utils/ClientOnly"
+export default defineComponent({
+  name: 'LoginPage',
+  setup(props) {
+    const storage = inject<Storage>(StorageSymbol)
+    const form = shallowRef()
+    // const
+    const data = reactive({
+      id: '',
+      pw: '',
+      formValid: false
+    })
+    function loginEvent(e: Event) {
+      e.preventDefault()
+      e.stopPropagation()
+      form.value.validate()
+      if (data.formValid) {
 
-export default {
-  setup() {
-    const storage = inject(StorageSymbol)
-
-    function loginWith(type: LoginType) {
-      switch (type) {
-        case LoginType.cookie:
-          storage?.cookie.set('userData', 'Hello - Cookie!!')
-          break
-        case LoginType.local:
-          storage?.local.set('userData', 'Hello - Local!!')
-          break
-        case LoginType.session:
-          storage?.session.set('userData', 'Hello - Session!!')
-          break
       }
     }
-    return () => <div>
-      <button onClick={() => loginWith(LoginType.cookie)}> login With Cookie</button>
-      <button onClick={() => loginWith(LoginType.session)}> login With SessionStorage</button>
-      <button onClick={() => loginWith(LoginType.local)}> login With LocalStorage</button>
+    return {
+      data,
+      loginEvent,
+      form
+    }
+  },
+  render() {
+    return <div>
+      <VCard class="pa-3">
+        <ClientOnly>
+          <VForm ref='form' v-model={this.data.formValid} onSubmit={this.loginEvent}>
+            <VTextField v-model={this.data.id} outlined label="ID"></VTextField>
+            <VTextField v-model={this.data.pw} outlined label="PW"></VTextField>
+            <VBtn type='submit' block color="primary">Login</VBtn>
+          </VForm>
+        </ClientOnly>
+      </VCard>
     </div>
   }
-}
+})

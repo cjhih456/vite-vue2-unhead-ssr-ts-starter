@@ -91,7 +91,7 @@ export default class Storage {
     }
   } as CustomStorage
 }
-export const StorageSymbol = Symbol() as InjectionKey<Storage>
+export const StorageSymbol = 'StorageSymbol' // Symbol() as InjectionKey<Storage>
 
 declare module 'vue/types/vue' {
   interface VueConstructor {

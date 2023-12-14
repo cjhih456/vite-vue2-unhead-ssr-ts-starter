@@ -10,6 +10,7 @@ import Storage, { StorageSymbol } from './plugins/StoragePlugin'
 import dayjs from 'dayjs'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 import createVuetifyPlugin from './plugins/VuetifyPlugin'
+import { provideHeader } from './plugins/LayoutHeaderPlugin'
 export const context = {} as VueContext
 function createApp(req?: Request, res?: Response) {
   const router = createRouter(context)
@@ -27,11 +28,15 @@ function createApp(req?: Request, res?: Response) {
   })
   const app = new Vue({
     router,
+    // @ts-ignore
     vuetify: vuetify,
     pinia: context.pinia,
     provide: {
-      [StorageSymbol as symbol]: context.storage,
+      [StorageSymbol]: context.storage,
       usehead: context.head
+    },
+    setup() {
+      provideHeader()
     },
     render: h => h(App)
   })
