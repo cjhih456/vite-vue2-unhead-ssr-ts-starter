@@ -1,14 +1,14 @@
-import Storage, { StorageSymbol } from "@/plugins/StoragePlugin";
+import { useAccountStore } from "@/store/account";
 
 export default defineComponent({
   name: 'HeaderDefault',
   setup() {
-    const storage = inject<Storage>(StorageSymbol)
+    const accountStore = useAccountStore()
     const userLoggedIn = computed(() => {
-      return storage?.cookie.get('userData')
+      return !!accountStore.data.loginUserIdx
     })
     function logout() {
-      storage?.cookie.delete('userData')
+      accountStore.logout()
     }
     return () => <VAppBar app absolute elevate-on-scroll>
       <VBtn to={{ name: 'Main' }} icon>

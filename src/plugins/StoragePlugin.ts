@@ -2,13 +2,13 @@ import type { CookieOptions, Request, Response } from "express"
 import _ from "lodash"
 import Vue, { type InjectionKey } from "vue"
 
-type CookieMergedOptions = CookieOptions & { sameSite?: string }
-type CustomStorage = {
+export type CookieMergedOptions = CookieOptions & { sameSite?: string }
+export type CustomStorage = {
   get(k: string): string
   set(k: string, v: string): void
   delete(k: string): void
 }
-type CookieStorage = CustomStorage & {
+export type CookieStorage = CustomStorage & {
   _req?: Request
   _res?: Response
   defaultConfig?: CookieMergedOptions
@@ -16,7 +16,7 @@ type CookieStorage = CustomStorage & {
   delete(k: string, o?: CookieMergedOptions): void
   setConfig(o?: CookieMergedOptions): void
 }
-type VueStorage = {
+export type VueStorage = {
   cookie: CookieStorage
   local: CustomStorage
   session: CustomStorage
@@ -48,7 +48,7 @@ export default class Storage {
     set(k, v, o) {
       const options = _.assign({}, this.defaultConfig, o)
       if (import.meta.env.SSR) {
-        this._res?.cookie(k, v, options)
+        // this._res?.cookie(k, v, options)
       } else {
         Vue.$cookies.set(k, v, options?.expires, options?.path, options?.domain, options?.secure, options?.sameSite)
       }

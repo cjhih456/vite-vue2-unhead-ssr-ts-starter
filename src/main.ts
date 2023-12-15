@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import Vue from 'vue'
 import App from './App'
 import { Vueuse } from './utils/VueHelper'
@@ -8,17 +9,15 @@ import AsyncDataPlugin from './plugins/AsyncDataPlugin'
 import type { Request, Response } from 'express'
 import Storage, { StorageSymbol } from './plugins/StoragePlugin'
 import dayjs from 'dayjs'
-import { createPinia, PiniaVuePlugin } from 'pinia'
 import createVuetifyPlugin from './plugins/VuetifyPlugin'
 import { provideHeader } from './plugins/LayoutHeaderPlugin'
+import createPiniaStore from './store'
+
 export const context = {} as VueContext
 function createApp(req?: Request, res?: Response) {
-  const router = createRouter(context)
   const vuetify = createVuetifyPlugin()
-  Vueuse(PiniaVuePlugin)
   Vueuse(AsyncDataPlugin, context)
   Vueuse(HeadPlugin, context)
-  context.pinia = createPinia()
   context.storage = new Storage(req && res ? { req, res } : undefined)
   context.storage.cookie.setConfig({
     path: '/',
@@ -26,6 +25,8 @@ function createApp(req?: Request, res?: Response) {
     secure: true,
     signed: true,
   })
+  createPiniaStore(context)
+  const router = createRouter(context)
   const app = new Vue({
     router,
     // @ts-ignore
