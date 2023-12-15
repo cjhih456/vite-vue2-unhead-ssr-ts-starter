@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'url'
 import express from 'express'
 import CookieParser from 'cookie-parser'
+import createMockApi from './mockApi.js'
 
 export async function createServer(
   isProd = process.env.NODE_ENV === 'production',
@@ -79,6 +80,16 @@ export async function createServer(
       })
     )
   }
+  if(process.env.NODE_ENV === 'development') {
+    /**
+     * Mock API
+     */
+    const router = createMockApi()
+    app.use('/api', router)
+    /**
+     * Mock API
+     */
+  }
 
   app.use('*', async(req, res) => {
     try {
@@ -94,7 +105,6 @@ export async function createServer(
       res.status(500).end(e.stack)
     }
   })
-
   return { app }
 }
 
