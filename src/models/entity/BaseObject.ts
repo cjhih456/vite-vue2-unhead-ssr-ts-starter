@@ -13,9 +13,7 @@ export class BaseObject {
   validateObj() {
     const result = validateSync(this)
     this.formErrors = result.reduce((acc, cur) => {
-      if (cur.constraints) {
-        acc[cur.property] = Object.keys(cur.constraints)
-      }
+      acc[cur.property] = [cur.toString()]
       return acc
     }, {} as ErrorObj)
   }

@@ -18,7 +18,14 @@ export default function createVuetifyPlugin() {
       VSpacer,
       VCard,
       VRow,
-      VCol
+      VCol,
+      VCardTitle,
+      VCardText,
+      VListItem,
+      VListItemAvatar,
+      VListItemTitle,
+      VListItemContent,
+      VImg,
     }
   })
   const vuetifyTheme = new Vuetify({

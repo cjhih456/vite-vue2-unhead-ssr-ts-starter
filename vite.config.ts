@@ -5,6 +5,7 @@ import vueJsx from '@vitejs/plugin-vue2-jsx'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import { checker } from 'vite-plugin-checker'
 import dotenv from 'dotenv'
+import viteTsconfigPaths from 'vite-tsconfig-paths';
 import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig((env) => {
@@ -43,13 +44,14 @@ export default defineConfig((env) => {
           manualChunks: env.ssrBuild ? undefined : {
             utils: ['lodash', 'vue', 'pinia', 'vue-router'],
           }
-        }
-      }
+        },
+      },
     },
     ssr: {
       noExternal: ['vuetify']
     },
     plugins: [
+      viteTsconfigPaths(),
       vue(),
       vueJsx(),
       AutoImport({
@@ -57,7 +59,7 @@ export default defineConfig((env) => {
         include: [/\.vue$/, /\.vue\?vue/, /\.[jt]sx$/, /\.[jt]sx\?[jt]sx$/, /\.[jt]s$/],
         defaultExportByFilename: true,
         imports: [{ 'vue-router': ['RouterLink', 'RouterView'] }, 'vue', 'pinia'],
-        dirs: ['../node_modules/vuetify/lib/components/*/V[A-Z]*.js']
+        dirs: ['../node_modules/vuetify/lib/components/V[A-Z]*/index.js']
       }),
       viteCommonjs(),
       legacy({
@@ -66,7 +68,7 @@ export default defineConfig((env) => {
       }),
       checker({
         typescript: true,
-        vueTsc: false
+        vueTsc: true,
       }),
     ],
     optimizeDeps: {

@@ -2,6 +2,7 @@ import { Vueuse } from "@/utils/VueHelper"
 import { PiniaVuePlugin } from "pinia"
 import type { VueContext } from "types/VueContext"
 import { useAccountStore } from "./account"
+import { useContentStore } from "./content"
 import { useStorageStore } from "./storage"
 
 export default function createPiniaStore(context: VueContext) {
@@ -12,5 +13,5 @@ export default function createPiniaStore(context: VueContext) {
   })
   useStorageStore(context.pinia)
   useAccountStore(context.pinia)
-
+  useContentStore(context.pinia)
 }

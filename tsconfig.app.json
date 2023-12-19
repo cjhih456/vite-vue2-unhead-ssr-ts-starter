@@ -1,14 +1,15 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["types/**/*.d.ts", "src/**/*", "src/auto-imports.d.ts"],
-  "exclude": ["dist", "dist-server"],
+  "exclude": ["dist", "dist-server", "./outDir"],
   "compilerOptions": {
     "allowJs": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "noEmit": true,
+    "composite": true,
     "baseUrl": ".",
+    "outDir": "./outDir",
     "paths": {
       "@/*": ["./src/*"]
     },

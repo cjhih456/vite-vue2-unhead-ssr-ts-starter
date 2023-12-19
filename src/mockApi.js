@@ -50,7 +50,7 @@ export default function createMockApi() {
           height: 240,
           category: 'mountain'
         }),
-        phone: faker.phone.number(),
+        phone: faker.helpers.fromRegExp('010-[0-9]{3,4}-[0-9]{4}'),
         email: faker.internet.email(),
         password: '123123'
       }
@@ -114,8 +114,8 @@ export default function createMockApi() {
     }
   })
   router.get('/contents', (req, res) => {
-    const pageSize = req.query.pageSize || 10
-    const offset = req.query.offset || 0
+    const pageSize = Number(req.query.pageSize) || 10
+    const offset = Number(req.query.offset) || 0
     const contentList = Object.values(mockContentInfo).slice(offset, pageSize).map(v => {v.writer = mockUserInfo[v.uid]; return v})
     res.json({
       content: contentList,
