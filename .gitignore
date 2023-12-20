@@ -9,3 +9,4 @@ dist-server
 
 .env.*.local
 auto-imports.d.ts
+.rollup.cache

@@ -1,4 +1,5 @@
 import HeaderDefault from '@/layout/header/HeaderDefault'
+import type { Ref } from 'vue'
 export const HeaderKey = 'headerKey'
 export interface LayoutHeaderType {
   headerName: Ref<string>,

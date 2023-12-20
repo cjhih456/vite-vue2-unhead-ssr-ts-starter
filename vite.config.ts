@@ -5,8 +5,9 @@ import vueJsx from '@vitejs/plugin-vue2-jsx'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import { checker } from 'vite-plugin-checker'
 import dotenv from 'dotenv'
-import viteTsconfigPaths from 'vite-tsconfig-paths';
 import AutoImport from 'unplugin-auto-import/vite'
+import { VuetifyResolver } from 'unplugin-vue-components/resolvers'
+import typescript from '@rollup/plugin-typescript'
 
 export default defineConfig((env) => {
   const processEnv = {} as ImportMetaEnv
@@ -50,16 +51,21 @@ export default defineConfig((env) => {
     ssr: {
       noExternal: ['vuetify']
     },
+    esbuild: false,
     plugins: [
-      viteTsconfigPaths(),
       vue(),
       vueJsx(),
       AutoImport({
         dts: true,
+        injectAtEnd: false,
         include: [/\.vue$/, /\.vue\?vue/, /\.[jt]sx$/, /\.[jt]sx\?[jt]sx$/, /\.[jt]s$/],
         defaultExportByFilename: true,
         imports: [{ 'vue-router': ['RouterLink', 'RouterView'] }, 'vue', 'pinia'],
-        dirs: ['../node_modules/vuetify/lib/components/V[A-Z]*/index.js']
+        resolvers: VuetifyResolver()
+      }),
+      typescript({
+        include: ['./src/auto-imports.d.ts', './src/**/*.ts', './src/**/*.tsx'],
+        tsconfig: 'tsconfig.app.json'
       }),
       viteCommonjs(),
       legacy({
