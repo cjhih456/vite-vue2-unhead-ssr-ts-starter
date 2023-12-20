@@ -16,8 +16,10 @@ export class AccountInfo extends BaseObjectWithDates {
   @IsOptional()
   thumb: string
   @IsPhoneNumber("KR")
+  @IsOptional()
   phone: string
   @IsEmail()
+  @IsOptional()
   email: string
 }
 

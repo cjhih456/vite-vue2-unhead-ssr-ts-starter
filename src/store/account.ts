@@ -53,6 +53,7 @@ export const useAccountStore = defineStore('account', () => {
 
   return {
     data,
+    userData,
     login,
     logout,
     tokenRefresh,

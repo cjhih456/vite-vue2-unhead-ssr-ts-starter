@@ -23,3 +23,4 @@ export const useStorageStore = defineStore('storage', {
     }
   }
 })
+import.meta.hot?.accept(acceptHMRUpdate(useStorageStore, import.meta.hot))

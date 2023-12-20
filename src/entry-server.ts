@@ -4,6 +4,7 @@ import createApp from './main'
 import type { ModuleNode } from 'vite'
 import _ from 'lodash'
 import type { Request, Response } from 'express'
+import devalue from '@nuxt/devalue'
 
 interface MainfestObj {
   [k: string]: Array<ModuleNode>
@@ -26,7 +27,9 @@ export async function render(tempHtml: string, url: string, manifest: MainfestOb
         if (err) {
           return resolve(err.stack)
         }
+        const storeData = devalue(context.pinia.state.value)
         const header = await renderSSRHead(context.head)
+        header.bodyTags = (header.bodyTags ?? '') + `<script>window.__piniaData=${storeData}</script>`
         const template = _.template(html)
         resolve(template({ ...header, preloadLinks: renderPreloadLinks(ctx.modules, manifest) }))
       })

@@ -22,12 +22,14 @@ function createRouter(context: VueContext) {
   router.beforeEach(async (to, from, next) => {
     if (!from.name || from.name === null) {
       const accountStore = useAccountStore()
-      const tokenBuffer = {
-        token: context.storage.cookie.get('token'),
-        refreshToken: context.storage.cookie.get('refreshToken')
+      if (!accountStore.data.token.token && context.storage.cookie.get('token')) {
+        const tokenBuffer = {
+          token: context.storage.cookie.get('token'),
+          refreshToken: context.storage.cookie.get('refreshToken')
+        }
+        accountStore.data.token = tokenBuffer
       }
-      accountStore.data.token = tokenBuffer
-      if (accountStore.data.token.token) {
+      if (accountStore.data.token.token && (!accountStore.data.loginUserIdx || !accountStore.userData[accountStore.data.loginUserIdx])) {
         await accountStore.getUserInfo()
       }
     }

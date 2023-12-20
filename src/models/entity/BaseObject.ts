@@ -17,6 +17,9 @@ export class BaseObject {
       return acc
     }, {} as ErrorObj)
   }
+  toJSON() {
+    return { ...this }
+  }
 }
 
 export class BaseObjectWithDates extends BaseObject {

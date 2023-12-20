@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
+    "@nuxt/devalue": "^2.0.2",
     "@types/jsonwebtoken": "^9.0.5",
     "@unhead/ssr": "^1.8.7",
     "@unhead/vue": "^1.8.7",
