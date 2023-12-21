@@ -1,9 +1,9 @@
 import { useAccountStore } from "@/store/account";
 import type { VueContext } from "types/VueContext";
-import type { Route } from "vue-router";
+import type { NavigationGuardNext, Route } from "vue-router";
 import type { MiddlewareNext } from "..";
 
-export default async function GuestOnly(to: Route, from: Route, next: MiddlewareNext, context: VueContext) {
+export default async function NeedLogin(to: Route, from: Route, next: MiddlewareNext, context: VueContext) {
   const accountStore = useAccountStore()
   if (!accountStore.data.token.token) {
     context.storage.cookie.get('token')
@@ -13,6 +13,5 @@ export default async function GuestOnly(to: Route, from: Route, next: Middleware
       await accountStore.getUserInfo()
     }
   }
-
-  return next(accountStore.data.loginUserIdx ? { name: 'Main', replace: true } : undefined)
+  return next(!accountStore.data.loginUserIdx ? { name: 'Login', replace: true } : undefined)
 }
