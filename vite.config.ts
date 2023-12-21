@@ -7,7 +7,7 @@ import { checker } from 'vite-plugin-checker'
 import dotenv from 'dotenv'
 import AutoImport from 'unplugin-auto-import/vite'
 import { VuetifyResolver } from 'unplugin-vue-components/resolvers'
-import typescript from '@rollup/plugin-typescript'
+import typescript from 'rollup-plugin-typescript2'
 
 export default defineConfig((env) => {
   const processEnv = {} as ImportMetaEnv
@@ -53,6 +53,10 @@ export default defineConfig((env) => {
     },
     esbuild: false,
     plugins: [
+      typescript({
+        tsconfig: './tsconfig.json',
+        check: false
+      }),
       vue(),
       vueJsx(),
       AutoImport({
@@ -62,10 +66,6 @@ export default defineConfig((env) => {
         defaultExportByFilename: true,
         imports: [{ 'vue-router': ['RouterLink', 'RouterView'] }, 'vue', 'pinia'],
         resolvers: VuetifyResolver()
-      }),
-      typescript({
-        include: ['./src/auto-imports.d.ts', './src/**/*.ts', './src/**/*.tsx'],
-        tsconfig: 'tsconfig.app.json'
       }),
       viteCommonjs(),
       legacy({
