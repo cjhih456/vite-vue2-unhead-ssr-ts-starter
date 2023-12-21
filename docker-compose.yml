@@ -1,0 +1,11 @@
+version: '0.1.0'
+
+services:
+  frontend-server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend-node
+    restart: unless-stopped
+    ports:
+      - "80:8080"

@@ -1,0 +1,12 @@
+node_modules
+.vscode
+yarn.lock
+yarn-error.log
+
+# build directory
+dist
+dist-server
+
+.env.*.local
+auto-imports.d.ts
+.rollup.cache
