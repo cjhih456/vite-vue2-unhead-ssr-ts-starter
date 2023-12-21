@@ -1,0 +1,30 @@
+on:
+  label:
+    types: [created]
+
+jobs:
+  make-images:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout to main
+        uses: actions/checkout@v4.1.1
+        with:
+          ref: main
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build docker file
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: false
+          outputs: type=oci,dest=/tmp/image.tar
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{github.event.label.name}}
+          path: /tmp/image.tar
+      # - name: Release To Server
+      #   uses: appleboy/scp-actions@v.0.1.4
+      #   with:
