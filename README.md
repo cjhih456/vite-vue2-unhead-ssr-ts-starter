@@ -4,9 +4,11 @@ Vite - Vue2 - unhead - ssr Server sample code
 
 <details>
 <summary><b>Project</b></summary>
+  
 | Package Manager | Bundler | Server  | Framework | Router     | Status |
 | --------------- | ------- | ------- | --------- | ---------- | ------ |
 | Yarn            | Vite    | Express | Vue2      | vue-router | pinia  |
+
 </details>
 
 ## File Structure
