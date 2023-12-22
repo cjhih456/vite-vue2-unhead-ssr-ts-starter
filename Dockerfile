@@ -1,13 +1,9 @@
-FROM node:18
+FROM node:18-slim
 
-RUN mkdir -p /app/
+RUN mkdir -p /app/ && chmod -R 755 /app/
 WORKDIR /app/
-RUN chmod -R 755 /app/
 
 COPY ./ /app/
-RUN yarn install
-RUN yarn build:prod
-
+RUN npm install && npm run build:prod
 EXPOSE 8080
-
-CMD yarn ssr:prod
+CMD npm run ssr:prod
