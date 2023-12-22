@@ -10,7 +10,7 @@ jobs:
       - name: checkout to main
         uses: actions/checkout@v4.1.1
         with:
-          ref: main
+          ref: ${{github.ref_name}}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Build docker file
@@ -24,7 +24,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-${{github.event.label.name}}
+          name: app-${{github.ref_name}}
           path: /tmp/image.tar
       # - name: Release To Server
       #   uses: appleboy/scp-actions@v.0.1.4
