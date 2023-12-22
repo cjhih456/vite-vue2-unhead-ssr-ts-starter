@@ -4,6 +4,6 @@ RUN mkdir -p /app/ && chmod -R 755 /app/
 WORKDIR /app/
 
 COPY ./ /app/
-RUN npm install && npm run build:prod
+RUN yarn install && yarn build:prod && yarn cache clean
 EXPOSE 8080
-CMD npm run ssr:prod
+CMD yarn ssr:prod
