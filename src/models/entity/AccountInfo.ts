@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer"
 import { IsEmail, IsNumber, IsOptional, IsPhoneNumber, IsString, IsStrongPassword, Length } from "class-validator"
 import { BaseObjectWithDates } from "./BaseObject"
 
@@ -24,6 +25,7 @@ export class AccountInfo extends BaseObjectWithDates {
 }
 
 export class AccountInfoWithPassword extends AccountInfo {
+  @Exclude()
   @IsStrongPassword()
   password: string
 }

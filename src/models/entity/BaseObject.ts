@@ -1,12 +1,12 @@
+import { Exclude, instanceToPlain } from "class-transformer"
 import { validateSync } from "class-validator"
 
 type ErrorObj = { [k: string]: string[] }
 
 export class BaseObject {
-  constructor() {
-    this.formErrors = {}
-  }
-  formErrors: ErrorObj
+  @Exclude()
+  formErrors: ErrorObj = {}
+
   get isValidatedObj() {
     return Object.keys(this.formErrors).length === 0
   }
@@ -17,8 +17,9 @@ export class BaseObject {
       return acc
     }, {} as ErrorObj)
   }
+
   toJSON() {
-    return { ...this }
+    return instanceToPlain(this)
   }
 }
 
