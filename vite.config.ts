@@ -1,16 +1,32 @@
 import { defineConfig } from 'vite'
 import legacy from '@vitejs/plugin-legacy'
-import vue from '@vitejs/plugin-vue2'
-import vueJsx from '@vitejs/plugin-vue2-jsx'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
-import { checker } from 'vite-plugin-checker'
 import dotenv from 'dotenv'
 import AutoImport from 'unplugin-auto-import/vite'
 import { VuetifyResolver } from 'unplugin-vue-components/resolvers'
-import typescript from 'rollup-plugin-typescript2'
+import swc from 'unplugin-swc'
 
 export default defineConfig((env) => {
   const processEnv = {} as ImportMetaEnv
+  const swcPlugin = swc.vite({
+    jsc: {
+      parser: {
+        syntax: 'typescript',
+        decorators: true,
+        tsx: true
+      },
+      transform: {
+        decoratorMetadata: true,
+        legacyDecorator: true,
+        react: {
+          runtime: 'automatic',
+          importSource: '@lancercomet/vue2-jsx-runtime',
+          throwIfNamespace: false
+        }
+      }
+    },
+    tsconfigFile: 'tsconfig.json',
+  })
   dotenv.config({
     override: true,
     processEnv,
@@ -53,12 +69,7 @@ export default defineConfig((env) => {
     },
     esbuild: false,
     plugins: [
-      typescript({
-        tsconfig: './tsconfig.json',
-        check: false
-      }),
-      vue(),
-      vueJsx(),
+      swcPlugin,
       AutoImport({
         dts: true,
         injectAtEnd: false,
@@ -71,10 +82,6 @@ export default defineConfig((env) => {
       legacy({
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-      }),
-      checker({
-        typescript: true,
-        vueTsc: true,
       }),
     ],
     optimizeDeps: {

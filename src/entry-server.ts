@@ -41,7 +41,7 @@ function renderPreloadLinks(modules: Set<string>, manifest: MainfestObj) {
   let links = ''
   const seen = new Set()
   const files = manifest[`${process.cwd()}/src/entry-client.ts`]
-  modules.forEach((id) => {
+  modules && modules.forEach((id) => {
     if (files) {
       files.forEach((file) => {
         if (!seen.has(file)) {

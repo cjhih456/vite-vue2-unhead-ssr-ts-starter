@@ -35,7 +35,6 @@ export async function createServer(
 
   let render
   if (!isProd) {
-    const ssr = await import('vite-plugin-ssr/plugin')
     vite = await (
       await import('vite')
     ).createServer({
