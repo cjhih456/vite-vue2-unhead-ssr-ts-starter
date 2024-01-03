@@ -1,9 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'node:url'
 import express from 'express'
 import CookieParser from 'cookie-parser'
-import createMockApi from './mockApi.js'
 
 export async function createServer(
   isProd = process.env.NODE_ENV === 'production',
@@ -83,6 +82,7 @@ export async function createServer(
     /**
      * Mock API
      */
+    const createMockApi = await (await import('./mockApi.js')).default
     const router = createMockApi()
     app.use('/api', router)
     /**

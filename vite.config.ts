@@ -4,6 +4,7 @@ import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import dotenv from 'dotenv'
 import AutoImport from 'unplugin-auto-import/vite'
 import { VuetifyResolver } from 'unplugin-vue-components/resolvers'
+import packageJson from 'rollup-plugin-generate-package-json'
 import swc from 'unplugin-swc'
 
 export default defineConfig((env) => {
@@ -83,6 +84,16 @@ export default defineConfig((env) => {
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime']
       }),
+      ...(env.ssrBuild ? [packageJson({
+        baseContents: {
+          scripts: {
+            start: 'NODE_ENV=production node ../src/server.js'
+          },
+          type: "module",
+          private: true
+        },
+        additionalDependencies: ['express', 'cookie-parser', 'vue-server-renderer', 'compression', 'serve-static'],
+      })] : [])
     ],
     optimizeDeps: {
       exclude: ['lodash']
